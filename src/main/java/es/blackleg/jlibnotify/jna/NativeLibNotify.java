@@ -44,4 +44,6 @@ public interface NativeLibNotify extends Library {
     
     GBoolean notify_notification_close(Pointer notification, Pointer error);
     
+    void notify_notification_add_action(Pointer notification, String action, String label, NotifyActionCallback callback, Pointer user_data, Object free_func);
+    
 }

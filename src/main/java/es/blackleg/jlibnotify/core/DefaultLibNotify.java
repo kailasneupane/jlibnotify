@@ -16,11 +16,13 @@
 package es.blackleg.jlibnotify.core;
 
 import com.sun.jna.Pointer;
+import es.blackleg.jlibnotify.ActionCallback;
 import es.blackleg.jlibnotify.LibNotify;
 import es.blackleg.jlibnotify.Notification;
 import es.blackleg.jlibnotify.ServerInfo;
 import es.blackleg.jlibnotify.jna.GBoolean;
 import es.blackleg.jlibnotify.jna.NativeLibNotify;
+import es.blackleg.jlibnotify.jna.NotifyActionCallback;
 import java.util.Collection;
 
 /**
@@ -102,6 +104,17 @@ public class DefaultLibNotify implements LibNotify {
         if (nativeLibNotify.notify_notification_close(notification.getPointer(), Pointer.NULL) == GBoolean.FALSE) {
             throw new RuntimeException("Error when show notification");
         }
+    }
+
+    @Override
+    public void addAction(Notification notification, ActionCallback actionCallback) {
+        NotifyActionCallback notifyActionCallback = new NotifyActionCallback() {
+            @Override
+            public void callback(Pointer notification, String action, Pointer user_data) {
+                System.out.println("asdas");
+            }
+        };
+        nativeLibNotify.notify_notification_add_action(notification.getPointer(), "action_click", "Reply to Message", notifyActionCallback, null, null);
     }
 
 }

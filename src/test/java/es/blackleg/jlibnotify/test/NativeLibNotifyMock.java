@@ -18,6 +18,7 @@ package es.blackleg.jlibnotify.test;
 import com.sun.jna.Pointer;
 import es.blackleg.jlibnotify.jna.GBoolean;
 import es.blackleg.jlibnotify.jna.NativeLibNotify;
+import es.blackleg.jlibnotify.jna.NotifyActionCallback;
 
 /**
  *
@@ -76,6 +77,11 @@ public class NativeLibNotifyMock implements NativeLibNotify {
     @Override
     public Pointer notify_get_server_caps() {
         return Pointer.NULL;
+    }
+    
+    @Override
+    public void notify_notification_add_action(Pointer notification, String action, String label, NotifyActionCallback callback, Pointer user_data, Object free_func) {
+        
     }
     
 }

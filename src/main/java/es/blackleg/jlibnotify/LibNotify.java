@@ -40,6 +40,8 @@ public interface LibNotify {
     Notification createNotification(String summary, String body, String icon);
 
     void showNotification(Notification notification);
+    
+    void addAction(Notification notification, ActionCallback actionCallback);
 
     void closeNotification(Notification notification);
     

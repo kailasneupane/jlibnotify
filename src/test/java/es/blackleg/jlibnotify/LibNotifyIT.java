@@ -18,6 +18,7 @@ package es.blackleg.jlibnotify;
 import es.blackleg.jlibnotify.core.DefaultLibNotifyLoader;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.concurrent.CountDownLatch;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.After;
 import org.junit.Before;
@@ -79,9 +80,20 @@ public class LibNotifyIT {
         Notification notification = libNotify.createNotification("LibNotify IT", "LibNotify Integration test", "dialog-information");
         assertThat(notification).isNotNull();
         
+        CountDownLatch latch = new CountDownLatch(1);
+        
+        
+        libNotify.addAction(notification, new ActionCallback() {
+            @Override
+            public void onAction() {
+                latch.countDown();
+            }
+            
+        });
+        
         libNotify.showNotification(notification);
         
-        Thread.sleep(1000);
+        latch.await();
         
         libNotify.closeNotification(notification);
     }
